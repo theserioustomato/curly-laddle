@@ -1,50 +1,43 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[13]:
 
 
-from flask import Flask, request, render_template
-import joblib
+from flask import Flask
 
 
-# In[2]:
+# In[14]:
 
 
 app = Flask(__name__)
+#must be double underline
 
 
-# In[3]:
+# In[15]:
 
 
+from flask import request, render_template
+import joblib
 
-#decorator: function to call
 @app.route("/", methods=["GET", "POST"])
+#must use methods with the s
+
 def index():
     if request.method == "POST":
-        rate = request.form.get("rate")
-        print(rate)
+        rates = request.form.get("rates")
+        print(rates)
         model = joblib.load("DBS")
-        pred = model.predict([[float(rate)]])
+        pred = model.predict([[float(rates)]])
         print(pred)
-        s = "Predicted DBS share price:" + str(pred)
-        print(s)
-        return(render_template("index.html", result=s))
+        s ="The predicted DBS share price is" + str(pred[0][0])
+        return(render_template("index.html", result = s))
     else:
-        return(render_template("index.html", result="Enter a number"))
-    
+        return(render_template("index.html", result="2"))
 
 
 # In[ ]:
 
 
-if __name__ == "__main__":
+if __name__=="__main__":
     app.run()
-    #app.run(host"0.0.0.0", port=int("80"))
-
-
-# In[ ]:
-
-
-
-
