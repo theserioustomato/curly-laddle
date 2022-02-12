@@ -25,7 +25,7 @@ import joblib
 
 def index():
     if request.method == "POST":
-        rates = request.form.get("rates")
+        rates = request.form.get("rate")
         print(rates)
         model = joblib.load("DBS")
         pred = model.predict([[float(rates)]])
